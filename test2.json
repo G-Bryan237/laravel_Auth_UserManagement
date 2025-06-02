@@ -1,0 +1,10 @@
+
+// POST http://localhost:8000/api/admin/register/next
+// Headers: Authorization: Bearer {token_from_first_step}
+{
+    "Language": "English",
+    "Gender": "Male",
+    "MaritalStatus": "Single",
+    "Location": "New York",
+    "WorkExperience": "5 years"
+}

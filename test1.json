@@ -1,0 +1,8 @@
+// POST http://localhost:8000/api/admin/register/start
+{
+    "FullName": "Test Admin",
+    "Email": "admin@test.com",
+    "PhoneNumber": "1234567890",
+    "Whatsapp": "1234567890",
+    "AcademicRecord": "Bachelor Degree"
+}
