@@ -9,15 +9,21 @@ class Region extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'country_id'];
+    protected $primaryKey = 'RegionID';
+    public $timestamps = false;
+
+    protected $fillable = [
+        'RegionName', 
+        'CountryCode'
+    ];
 
     public function country()
     {
-        return $this->belongsTo(Country::class);
+        return $this->belongsTo(Country::class, 'CountryCode', 'CountryCode');
     }
 
     public function schools()
     {
-        return $this->hasMany(School::class);
+        return $this->hasMany(School::class, 'RegionID', 'RegionID');
     }
 }

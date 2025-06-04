@@ -1,8 +1,18 @@
-// POST http://localhost:8000/api/admin/register/start
-{
-    "FullName": "Test Admin",
-    "Email": "admin@test.com",
-    "PhoneNumber": "1234567890",
-    "Whatsapp": "1234567890",
-    "AcademicRecord": "Bachelor Degree"
-}
+
+[
+    {
+        "FullName": "Test Admin",
+        "Email": "admin@test.com",
+        "PhoneNumber": "1234567890",
+        "Whatsapp": "1234567890",
+        "AcademicRecord": "Bachelor Degree",
+        "Password": "password123"
+    },
+    {
+        "Language": "English",
+        "Gender": "Male",
+        "MaritalStatus": "Single",
+        "Location": "New York",
+        "WorkExperience": "5 years"
+    }
+]

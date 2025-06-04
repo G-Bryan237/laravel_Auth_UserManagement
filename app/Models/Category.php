@@ -9,5 +9,21 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $primaryKey = 'CategoryID';
+    public $timestamps = false;
+
+    protected $fillable = [
+        'CategoryName', 
+        'CountryCode'
+    ];
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class, 'CountryCode', 'CountryCode');
+    }
+
+    public function schools()
+    {
+        return $this->hasMany(School::class, 'CategoryID', 'CategoryID');
+    }
 }

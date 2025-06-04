@@ -1,27 +1,30 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace App\Models;
 
-return new class extends Migration
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class SchoolClass extends Model
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    use HasFactory;
+
+    protected $table = 'school_classes';
+    protected $primaryKey = 'id'; // Use 'id' instead of 'ClassID'
+    public $timestamps = true; // Enable timestamps since table has created_at/updated_at
+    
+    protected $fillable = [
+        'ClassName',
+        'SchoolID'
+    ];
+
+    public function school()
     {
-        Schema::create('school_classes', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+        return $this->belongsTo(School::class, 'SchoolID', 'SchoolID');
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function specialities()
     {
-        Schema::dropIfExists('school_classes');
+        return $this->hasMany(Speciality::class, 'ClassID', 'id'); // Use 'id' as foreign key
     }
-};
+}

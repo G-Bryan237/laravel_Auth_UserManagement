@@ -5,44 +5,131 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Specialty;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class SpecialtyController extends Controller
 {
     public function index()
     {
-        return Specialty::all();
+        try {
+            $specialties = Specialty::with(['school', 'schoolClass'])->get();
+            
+            return response()->json([
+                'success' => true,
+                'data' => $specialties
+            ], 200);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch specialties',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string',
-            'description' => 'required|string'
-        ]);
+        try {
+            $validated = $request->validate([
+                'SpecialtyName' => 'required|string|max:100',
+                'Description' => 'nullable|string',
+                'SchoolID' => 'required|integer|exists:schools,SchoolID',
+                'ClassID' => 'required|integer|exists:school_classes,id'
+            ]);
 
-        return Specialty::create($request->all());
+            $specialty = Specialty::create($validated);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Specialty created successfully',
+                'data' => $specialty->load(['school', 'schoolClass'])
+            ], 201);
+            
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'errors' => $e->errors()
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to create specialty',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function show($id)
     {
-        return Specialty::findOrFail($id);
+        try {
+            $specialty = Specialty::with(['school', 'schoolClass'])->findOrFail($id);
+            
+            return response()->json([
+                'success' => true,
+                'data' => $specialty
+            ], 200);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Specialty not found',
+                'error' => $e->getMessage()
+            ], 404);
+        }
     }
 
     public function update(Request $request, $id)
     {
-        $specialty = Specialty::findOrFail($id);
-        
-        $request->validate([
-            'name' => 'required|string',
-            'description' => 'required|string'
-        ]);
+        try {
+            $specialty = Specialty::findOrFail($id);
+            
+            $validated = $request->validate([
+                'SpecialtyName' => 'required|string|max:100',
+                'Description' => 'nullable|string',
+                'SchoolID' => 'required|integer|exists:schools,SchoolID',
+                'ClassID' => 'required|integer|exists:school_classes,id'
+            ]);
 
-        $specialty->update($request->all());
-        return $specialty;
+            $specialty->update($validated);
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Specialty updated successfully',
+                'data' => $specialty->load(['school', 'schoolClass'])
+            ], 200);
+            
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'errors' => $e->errors()
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to update specialty',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function destroy($id)
     {
-        return Specialty::destroy($id);
+        try {
+            $specialty = Specialty::findOrFail($id);
+            $specialty->delete();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Specialty deleted successfully'
+            ], 200);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete specialty',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }

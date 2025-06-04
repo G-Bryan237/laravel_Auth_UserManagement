@@ -9,9 +9,11 @@ class Country extends Model
 {
     use HasFactory;
 
+    protected $table = 'Country'; // Match your migration table name
     protected $primaryKey = 'CountryCode';
     public $incrementing = false;
     protected $keyType = 'string';
+    public $timestamps = false; // Your migration doesn't have updated_at
     
     protected $fillable = [
         'CountryCode',
@@ -20,12 +22,12 @@ class Country extends Model
 
     public function regions()
     {
-        return $this->hasMany(Region::class, 'CountryID', 'CountryCode');
+        return $this->hasMany(Region::class, 'CountryCode', 'CountryCode');
     }
 
     public function categories()
     {
-        return $this->hasMany(Category::class, 'CountryID', 'CountryCode');
+        return $this->hasMany(Category::class, 'CountryCode', 'CountryCode');
     }
 }
 

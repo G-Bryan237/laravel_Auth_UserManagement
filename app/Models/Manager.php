@@ -9,5 +9,26 @@ class Manager extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'email'];
+    protected $fillable = [
+        'full_name',
+        'email', 
+        'phone',
+        'date_of_birth',
+        'language',
+        'gender',
+        'marital_status',
+        'location',
+        'role',
+        'password',
+        'working_experience'
+    ];
+
+    protected $hidden = [
+        'password'
+    ];
+
+    protected $casts = [
+        'date_of_birth' => 'date'
+    ];  
+    
 }

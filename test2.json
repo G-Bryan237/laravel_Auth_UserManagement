@@ -1,10 +1,15 @@
-
-// POST http://localhost:8000/api/admin/register/next
-// Headers: Authorization: Bearer {token_from_first_step}
 {
-    "Language": "English",
-    "Gender": "Male",
-    "MaritalStatus": "Single",
-    "Location": "New York",
-    "WorkExperience": "5 years"
+    "FullName": "Maria Rodriguez",
+    "Email": "maria.rodriguez@education.com",
+    "PhoneNumber": "7185551234",
+    "Whatsapp": "7185551234",
+    "AcademicRecord": "PhD in Education",
+    "Password": "SecureAdmin2024!"
 }
+{
+    "Language": "French",
+    "Gender": "Female",
+    "MaritalStatus": "Divorced",
+    "Location": "Boston",
+    "WorkExperience": "10 years"
+},

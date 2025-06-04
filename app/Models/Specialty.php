@@ -9,5 +9,23 @@ class Specialty extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description'];
+    protected $primaryKey = 'SpecialtyID';
+    public $timestamps = false; // Using CreatedAt only
+    
+    protected $fillable = [
+        'SpecialtyName',
+        'Description', 
+        'SchoolID',
+        'ClassID'
+    ];
+
+    public function school()
+    {
+        return $this->belongsTo(School::class, 'SchoolID', 'SchoolID');
+    }
+
+    public function schoolClass()
+    {
+        return $this->belongsTo(SchoolClass::class, 'ClassID', 'id');
+    }
 }

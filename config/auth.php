@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Authentication Defaults
@@ -41,11 +40,11 @@ return [
             'provider' => 'users',
         ],
         'api' => [
-            'driver' => 'jwt',
+            'driver' => 'sanctum', // Change from 'jwt' to 'sanctum'
             'provider' => 'users',
         ],
         'admin' => [
-            'driver' => 'jwt',
+            'driver' => 'sanctum', // Change from 'jwt' to 'sanctum'
             'provider' => 'admins',
         ],
     ],
@@ -123,5 +122,4 @@ return [
     */
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
-
 ];

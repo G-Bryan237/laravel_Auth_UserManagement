@@ -9,8 +9,9 @@ class SchoolClass extends Model
 {
     use HasFactory;
 
-    protected $table = 'Class';
+    protected $table = 'school_classes'; // Change from 'Class' to 'school_classes'
     protected $primaryKey = 'ClassID';
+    public $timestamps = false;
     
     protected $fillable = [
         'ClassName',
@@ -19,11 +20,11 @@ class SchoolClass extends Model
 
     public function school()
     {
-        return $this->belongsTo(School::class, 'SchoolID');
+        return $this->belongsTo(School::class, 'SchoolID', 'SchoolID');
     }
 
     public function specialities()
     {
-        return $this->hasMany(Speciality::class, 'ClassID');
+        return $this->hasMany(Speciality::class, 'ClassID', 'ClassID');
     }
 }
